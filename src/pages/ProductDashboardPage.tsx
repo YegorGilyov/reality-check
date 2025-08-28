@@ -1,6 +1,7 @@
 import { Layout, Segmented, Typography } from 'antd';
 import React, { useState } from 'react';
-import { RealityChecksSummary } from '../components/reality-checks/RealityChecksSummary';
+import { ProductIdeaCard } from '../components/product-ideas/ProductIdeaCard';
+import { useProductIdeas } from '../hooks/useProductIdeas';
 
 const { Header, Content } = Layout;
 
@@ -28,6 +29,10 @@ const contentStyle: React.CSSProperties = {
 
 const ProductDashboardPage: React.FC = () => {
   const [activeView, setActiveView] = useState<'ideas' | 'checks'>('ideas');
+  const { productIdeas } = useProductIdeas();
+
+  // For testing Task 3, we display the first product idea from the pre-populated store.
+  const firstProductIdea = productIdeas[1];
 
   return (
     <Layout>
@@ -42,14 +47,20 @@ const ProductDashboardPage: React.FC = () => {
         />
       </Header>
       <Content style={contentStyle}>
-        <div style={{ padding: 24 }}>
+        <div style={{ padding: 24, maxWidth: 900, margin: 'auto' }}>
           {activeView === 'ideas' ? (
             <div>
-              <Typography.Title level={2}>Product Ideas View</Typography.Title>
-              <div style={{ maxWidth: 200, margin: 'auto', border: '1px solid #f0f0f0', padding: 16, borderRadius: 8 }}>
-                <Typography.Title level={4}>Test: RealityChecksSummary</Typography.Title>
-                <RealityChecksSummary productIdeaId="26a501f5-18c0-476c-954a-c6a30fbcf10e" />
-              </div>
+              <Typography.Title level={2} style={{ textAlign: 'center' }}>
+                Product Ideas View (Testing Task 3)
+              </Typography.Title>
+              {firstProductIdea ? (
+                <ProductIdeaCard
+                  productIdea={firstProductIdea}
+                  onClick={() => console.log(`Card for ${firstProductIdea.name} clicked!`)}
+                />
+              ) : (
+                <p>Loading product ideas...</p>
+              )}
             </div>
           ) : (
             <Typography.Title level={2}>Reality Checks View</Typography.Title>

@@ -43,11 +43,11 @@ export function RealityChecksSummary({ productIdeaId }: Props) {
   );
 
   return (
-    <Flex vertical align="center" justify="center" style={{ height: '100%' }}>
+    <Flex vertical align="center" style={{ width: '100%' }}>
       <Title level={2} style={{ margin: 0 }}>
         {summary.total}
       </Title>
-      <div style={{ width: '80%', marginTop: 8 }}>{statusBar}</div>
+      <div style={{ width: '100%', marginTop: 8 }}>{statusBar}</div>
     </Flex>
   );
 }
