@@ -4,7 +4,7 @@ import { Typography, Flex } from 'antd';
 
 const { Title } = Typography;
 
-interface Props {
+interface RealityChecksSummaryProps {
   productIdeaId: string;
 }
 
@@ -15,7 +15,7 @@ const statusColors: Record<RealityCheckStatus, string> = {
   Disproved: '#ffccc7',
 };
 
-export function RealityChecksSummary({ productIdeaId }: Props) {
+export function RealityChecksSummary({ productIdeaId }: RealityChecksSummaryProps) {
   const { summary } = useRealityChecks({ productIdeaId });
 
   const statusBar = (

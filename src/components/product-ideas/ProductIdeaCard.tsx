@@ -4,7 +4,7 @@ import { RealityChecksSummary } from '../reality-checks/RealityChecksSummary';
 
 const { Title, Paragraph } = Typography;
 
-interface Props {
+interface ProductIdeaCardProps {
   productIdea: ProductIdea;
   onClick: () => void;
 }
@@ -25,7 +25,7 @@ const metricBoxStyle: React.CSSProperties = {
   borderLeft: '1px solid #f0f0f0',
 };
 
-export function ProductIdeaCard({ productIdea, onClick }: Props) {
+export function ProductIdeaCard({ productIdea, onClick }: ProductIdeaCardProps) {
   const { name, description, impact, confidence, ease, iceScore, id } = productIdea;
 
   return (

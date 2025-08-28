@@ -1,7 +1,6 @@
 import { Layout, Segmented, Typography } from 'antd';
 import React, { useState } from 'react';
-import { ProductIdeaCard } from '../components/product-ideas/ProductIdeaCard';
-import { useProductIdeas } from '../hooks/useProductIdeas';
+import { ProductIdeasView } from '../components/product-ideas/ProductIdeasView';
 
 const { Header, Content } = Layout;
 
@@ -29,10 +28,26 @@ const contentStyle: React.CSSProperties = {
 
 const ProductDashboardPage: React.FC = () => {
   const [activeView, setActiveView] = useState<'ideas' | 'checks'>('ideas');
-  const { productIdeas } = useProductIdeas();
+  const [selectedProductIdeaId, setSelectedProductIdeaId] = useState<string | null>(null);
 
-  // For testing Task 3, we display the first product idea from the pre-populated store.
-  const firstProductIdea = productIdeas[1];
+  const renderContent = () => {
+    if (activeView === 'ideas') {
+      if (selectedProductIdeaId) {
+        // This will be the ProductIdeaOverview in a future task
+        return (
+          <Typography.Title level={2}>
+            Product Idea Overview for: {selectedProductIdeaId}
+          </Typography.Title>
+        );
+      }
+      return <ProductIdeasView onSelectIdea={setSelectedProductIdeaId} />;
+    }
+    if (activeView === 'checks') {
+      // This will be the RealityChecksKanban in a future task
+      return <Typography.Title level={2}>Reality Checks View</Typography.Title>;
+    }
+    return null;
+  };
 
   return (
     <Layout>
@@ -43,28 +58,15 @@ const ProductDashboardPage: React.FC = () => {
             { label: 'Reality Checks', value: 'checks' },
           ]}
           value={activeView}
-          onChange={(value) => setActiveView(value as 'ideas' | 'checks')}
+          onChange={(value) => {
+            setActiveView(value as 'ideas' | 'checks');
+            setSelectedProductIdeaId(null); // Reset selection when switching views
+          }}
         />
       </Header>
       <Content style={contentStyle}>
         <div style={{ padding: 24, maxWidth: 900, margin: 'auto' }}>
-          {activeView === 'ideas' ? (
-            <div>
-              <Typography.Title level={2} style={{ textAlign: 'center' }}>
-                Product Ideas View (Testing Task 3)
-              </Typography.Title>
-              {firstProductIdea ? (
-                <ProductIdeaCard
-                  productIdea={firstProductIdea}
-                  onClick={() => console.log(`Card for ${firstProductIdea.name} clicked!`)}
-                />
-              ) : (
-                <p>Loading product ideas...</p>
-              )}
-            </div>
-          ) : (
-            <Typography.Title level={2}>Reality Checks View</Typography.Title>
-          )}
+          {renderContent()}
         </div>
       </Content>
     </Layout>
