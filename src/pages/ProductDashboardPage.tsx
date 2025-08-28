@@ -1,6 +1,8 @@
-import { Layout, Segmented, Typography } from 'antd';
+import { FloatButton, Layout, Segmented, Typography } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import { ProductIdeasView } from '../components/product-ideas/ProductIdeasView';
+import { ProductIdeaForm } from '../components/product-ideas/ProductIdeaForm';
 
 const { Header, Content } = Layout;
 
@@ -29,6 +31,7 @@ const contentStyle: React.CSSProperties = {
 const ProductDashboardPage: React.FC = () => {
   const [activeView, setActiveView] = useState<'ideas' | 'checks'>('ideas');
   const [selectedProductIdeaId, setSelectedProductIdeaId] = useState<string | null>(null);
+  const [isProductIdeaFormOpen, setIsProductIdeaFormOpen] = useState(false);
 
   const renderContent = () => {
     if (activeView === 'ideas') {
@@ -69,6 +72,15 @@ const ProductDashboardPage: React.FC = () => {
           {renderContent()}
         </div>
       </Content>
+      <FloatButton
+        icon={<PlusOutlined />}
+        type="primary"
+        onClick={() => setIsProductIdeaFormOpen(true)}
+      />
+      <ProductIdeaForm
+        isOpen={isProductIdeaFormOpen}
+        onClose={() => setIsProductIdeaFormOpen(false)}
+      />
     </Layout>
   );
 };
