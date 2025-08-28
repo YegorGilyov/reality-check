@@ -1,7 +1,14 @@
-import { DalTestPage } from './pages/DalTestPage';
+import { App as AntApp, ConfigProvider } from 'antd';
+import ProductDashboardPage from './pages/ProductDashboardPage';
 
 function App() {
-  return <DalTestPage />;
+  return (
+    <ConfigProvider>
+      <AntApp>
+        <ProductDashboardPage />
+      </AntApp>
+    </ConfigProvider>
+  );
 }
 
 export default App;
