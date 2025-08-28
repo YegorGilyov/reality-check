@@ -1,5 +1,6 @@
 import { Layout, Segmented, Typography } from 'antd';
 import React, { useState } from 'react';
+import { RealityChecksSummary } from '../components/reality-checks/RealityChecksSummary';
 
 const { Header, Content } = Layout;
 
@@ -43,7 +44,13 @@ const ProductDashboardPage: React.FC = () => {
       <Content style={contentStyle}>
         <div style={{ padding: 24 }}>
           {activeView === 'ideas' ? (
-            <Typography.Title level={2}>Product Ideas View</Typography.Title>
+            <div>
+              <Typography.Title level={2}>Product Ideas View</Typography.Title>
+              <div style={{ maxWidth: 200, margin: 'auto', border: '1px solid #f0f0f0', padding: 16, borderRadius: 8 }}>
+                <Typography.Title level={4}>Test: RealityChecksSummary</Typography.Title>
+                <RealityChecksSummary productIdeaId="26a501f5-18c0-476c-954a-c6a30fbcf10e" />
+              </div>
+            </div>
           ) : (
             <Typography.Title level={2}>Reality Checks View</Typography.Title>
           )}
