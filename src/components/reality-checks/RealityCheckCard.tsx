@@ -2,8 +2,13 @@ import type { RealityCheck, RealityCheckStatus } from '../../types/entities';
 import { Card, Typography } from 'antd';
 import { useProductIdeas } from '../../hooks/useProductIdeas';
 import { FieldTimeOutlined } from '@ant-design/icons';
+import { useDrag } from 'react-dnd';
 
 const { Paragraph, Text } = Typography;
+
+export const DND_ITEM_TYPES = {
+  REALITY_CHECK: 'realityCheck',
+};
 
 interface RealityCheckCardProps {
   realityCheck: RealityCheck;
@@ -21,23 +26,33 @@ export function RealityCheckCard({ realityCheck, onClick }: RealityCheckCardProp
   const { productIdeasDict } = useProductIdeas();
   const productIdea = realityCheck.productIdeaId ? productIdeasDict[realityCheck.productIdeaId] : null;
 
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: DND_ITEM_TYPES.REALITY_CHECK,
+    item: { id: realityCheck.id },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
   const formatDate = (isoString: string) => new Date(isoString).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
   return (
-    <Card
-      hoverable
-      onClick={onClick}
-      style={{ marginBottom: 12, borderTop: `3px solid ${statusColors[realityCheck.status]}` }}
-      bodyStyle={{ padding: 16 }}
-    >
-      <Paragraph strong>{realityCheck.hypothesis}</Paragraph>
-      {productIdea && <Text type="secondary">{productIdea.name}</Text>}
-      <div style={{ marginTop: 8 }}>
-        <Text type="secondary" style={{ fontSize: 12 }}>
-          <FieldTimeOutlined style={{ marginRight: 4 }} />
-          {formatDate(realityCheck.startDate)} - {formatDate(realityCheck.endDate)}
-        </Text>
-      </div>
-    </Card>
+    <div ref={drag} style={{ opacity: isDragging ? 0.5 : 1 }}>
+      <Card
+        hoverable
+        onClick={onClick}
+        style={{ marginBottom: 12, borderTop: `3px solid ${statusColors[realityCheck.status]}` }}
+        bodyStyle={{ padding: 16 }}
+      >
+        <Paragraph strong>{realityCheck.hypothesis}</Paragraph>
+        {productIdea && <Text type="secondary">{productIdea.name}</Text>}
+        <div style={{ marginTop: 8 }}>
+          <Text type="secondary" style={{ fontSize: 12 }}>
+            <FieldTimeOutlined style={{ marginRight: 4 }} />
+            {formatDate(realityCheck.startDate)} - {formatDate(realityCheck.endDate)}
+          </Text>
+        </div>
+      </Card>
+    </div>
   );
 }

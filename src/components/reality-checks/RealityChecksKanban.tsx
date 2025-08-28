@@ -1,7 +1,8 @@
 import { Col, Row, Typography } from 'antd';
 import { useRealityChecks } from '../../hooks/useRealityChecks';
-import type { RealityCheckStatus } from '../../types/entities';
-import { RealityCheckCard } from './RealityCheckCard';
+import type { RealityCheck, RealityCheckStatus } from '../../types/entities';
+import { DND_ITEM_TYPES, RealityCheckCard } from './RealityCheckCard';
+import { useDrop } from 'react-dnd';
 
 const { Title, Text } = Typography;
 
@@ -11,33 +12,62 @@ interface RealityChecksKanbanProps {
 
 const KANBAN_COLUMNS: RealityCheckStatus[] = ['New', 'In Progress', 'Proved', 'Disproved'];
 
+interface KanbanColumnProps {
+  status: RealityCheckStatus;
+  checks: RealityCheck[];
+  onDrop: (checkId: string, newStatus: RealityCheckStatus) => void;
+}
+
+function KanbanColumn({ status, checks, onDrop }: KanbanColumnProps) {
+  const [{ isOver }, drop] = useDrop(() => ({
+    accept: DND_ITEM_TYPES.REALITY_CHECK,
+    drop: (item: { id: string }) => onDrop(item.id, status),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  }));
+
+  return (
+    <Col ref={drop} span={6}>
+      <div style={{ backgroundColor: '#fafafa', padding: '8px 12px', borderRadius: 8 }}>
+        <Title level={5} style={{ margin: 0, textTransform: 'uppercase', fontSize: 12 }}>
+          {status} <Text type="secondary">({checks.length})</Text>
+        </Title>
+      </div>
+      <div style={{ marginTop: 16, minHeight: 200, backgroundColor: isOver ? '#f0f2f5' : 'transparent', borderRadius: 8, padding: 4 }}>
+        {checks.map((check) => (
+          <RealityCheckCard
+            key={check.id}
+            realityCheck={check}
+            onClick={() => console.log(`Clicked on check: ${check.id}`)} // Placeholder for edit
+          />
+        ))}
+      </div>
+    </Col>
+  );
+}
+
 export function RealityChecksKanban({ productIdeaId }: RealityChecksKanbanProps) {
-  const { realityChecks } = useRealityChecks({ productIdeaId });
+  const { realityChecks, updateRealityCheck } = useRealityChecks({ productIdeaId });
 
   const groupedChecks = realityChecks.reduce((acc, check) => {
     (acc[check.status] = acc[check.status] || []).push(check);
     return acc;
   }, {} as Record<RealityCheckStatus, typeof realityChecks>);
 
+  const handleDrop = (checkId: string, newStatus: RealityCheckStatus) => {
+    updateRealityCheck(checkId, { status: newStatus });
+  };
+
   return (
     <Row gutter={16}>
       {KANBAN_COLUMNS.map((status) => (
-        <Col key={status} span={6}>
-          <div style={{ backgroundColor: '#fafafa', padding: '8px 12px', borderRadius: 8 }}>
-            <Title level={5} style={{ margin: 0, textTransform: 'uppercase', fontSize: 12 }}>
-              {status} <Text type="secondary">({groupedChecks[status]?.length || 0})</Text>
-            </Title>
-          </div>
-          <div style={{ marginTop: 16, minHeight: 200 }}>
-            {(groupedChecks[status] || []).map((check) => (
-              <RealityCheckCard
-                key={check.id}
-                realityCheck={check}
-                onClick={() => console.log(`Clicked on check: ${check.id}`)} // Placeholder for edit
-              />
-            ))}
-          </div>
-        </Col>
+        <KanbanColumn
+          key={status}
+          status={status}
+          checks={groupedChecks[status] || []}
+          onDrop={handleDrop}
+        />
       ))}
     </Row>
   );
