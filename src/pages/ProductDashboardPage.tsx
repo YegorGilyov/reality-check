@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ProductIdeasView } from '../components/product-ideas/ProductIdeasView';
 import { ProductIdeaForm } from '../components/product-ideas/ProductIdeaForm';
 import { ProductIdeaOverview } from '../components/product-ideas/ProductIdeaOverview';
+import { RealityChecksKanban } from '../components/reality-checks/RealityChecksKanban';
 
 const { Header, Content } = Layout;
 
@@ -47,8 +48,7 @@ const ProductDashboardPage: React.FC = () => {
       return <ProductIdeasView onSelectIdea={setSelectedProductIdeaId} />;
     }
     if (activeView === 'checks') {
-      // This will be the RealityChecksKanban in a future task
-      return <Typography.Title level={2}>Reality Checks View</Typography.Title>;
+      return <RealityChecksKanban />;
     }
     return null;
   };
@@ -69,7 +69,7 @@ const ProductDashboardPage: React.FC = () => {
         />
       </Header>
       <Content style={contentStyle}>
-        <div style={{ padding: 24, maxWidth: 900, margin: 'auto' }}>
+        <div style={{ padding: 24, maxWidth: 1200, margin: 'auto' }}>
           {renderContent()}
         </div>
       </Content>

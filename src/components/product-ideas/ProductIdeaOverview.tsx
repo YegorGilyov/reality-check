@@ -3,6 +3,7 @@ import { Button, Col, Flex, Modal, Row, Slider, Typography, App } from 'antd';
 import { useProductIdeas } from '../../hooks/useProductIdeas';
 import { RealityChecksSummary } from '../reality-checks/RealityChecksSummary';
 import { useEffect, useState } from 'react';
+import { RealityChecksKanban } from '../reality-checks/RealityChecksKanban';
 
 const { Paragraph, Title } = Typography;
 
@@ -125,8 +126,7 @@ export function ProductIdeaOverview({ productIdeaId, onBack }: ProductIdeaOvervi
         </Col>
       </Row>
       <div style={{ marginTop: 24 }}>
-        {/* Placeholder for RealityChecksKanban */}
-        <Title level={4}>Reality Checks Kanban</Title>
+        <RealityChecksKanban productIdeaId={productIdea.id} />
       </div>
     </div>
   );
