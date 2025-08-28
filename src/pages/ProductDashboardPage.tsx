@@ -3,6 +3,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import { ProductIdeasView } from '../components/product-ideas/ProductIdeasView';
 import { ProductIdeaForm } from '../components/product-ideas/ProductIdeaForm';
+import { ProductIdeaOverview } from '../components/product-ideas/ProductIdeaOverview';
 
 const { Header, Content } = Layout;
 
@@ -36,11 +37,11 @@ const ProductDashboardPage: React.FC = () => {
   const renderContent = () => {
     if (activeView === 'ideas') {
       if (selectedProductIdeaId) {
-        // This will be the ProductIdeaOverview in a future task
         return (
-          <Typography.Title level={2}>
-            Product Idea Overview for: {selectedProductIdeaId}
-          </Typography.Title>
+          <ProductIdeaOverview
+            productIdeaId={selectedProductIdeaId}
+            onBack={() => setSelectedProductIdeaId(null)}
+          />
         );
       }
       return <ProductIdeasView onSelectIdea={setSelectedProductIdeaId} />;
