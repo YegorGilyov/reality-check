@@ -3,6 +3,8 @@ import { useRealityChecks } from '../../hooks/useRealityChecks';
 import type { RealityCheck, RealityCheckStatus } from '../../types/entities';
 import { DND_ITEM_TYPES, RealityCheckCard } from './RealityCheckCard';
 import { useDrop } from 'react-dnd';
+import { useState } from 'react';
+import { RealityCheckForm } from './RealityCheckForm';
 
 const { Title, Text } = Typography;
 
@@ -16,9 +18,10 @@ interface KanbanColumnProps {
   status: RealityCheckStatus;
   checks: RealityCheck[];
   onDrop: (checkId: string, newStatus: RealityCheckStatus) => void;
+  onCardClick: (checkId: string) => void;
 }
 
-function KanbanColumn({ status, checks, onDrop }: KanbanColumnProps) {
+function KanbanColumn({ status, checks, onDrop, onCardClick }: KanbanColumnProps) {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: DND_ITEM_TYPES.REALITY_CHECK,
     drop: (item: { id: string }) => onDrop(item.id, status),
@@ -39,7 +42,7 @@ function KanbanColumn({ status, checks, onDrop }: KanbanColumnProps) {
           <RealityCheckCard
             key={check.id}
             realityCheck={check}
-            onClick={() => console.log(`Clicked on check: ${check.id}`)} // Placeholder for edit
+            onClick={() => onCardClick(check.id)}
           />
         ))}
       </div>
@@ -49,6 +52,8 @@ function KanbanColumn({ status, checks, onDrop }: KanbanColumnProps) {
 
 export function RealityChecksKanban({ productIdeaId }: RealityChecksKanbanProps) {
   const { realityChecks, updateRealityCheck } = useRealityChecks({ productIdeaId });
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [editingCheckId, setEditingCheckId] = useState<string | undefined>(undefined);
 
   const groupedChecks = realityChecks.reduce((acc, check) => {
     (acc[check.status] = acc[check.status] || []).push(check);
@@ -59,16 +64,34 @@ export function RealityChecksKanban({ productIdeaId }: RealityChecksKanbanProps)
     updateRealityCheck(checkId, { status: newStatus });
   };
 
+  const handleCardClick = (checkId: string) => {
+    setEditingCheckId(checkId);
+    setIsFormOpen(true);
+  };
+
+  const handleCloseForm = () => {
+    setIsFormOpen(false);
+    setEditingCheckId(undefined);
+  };
+
   return (
-    <Row gutter={16}>
-      {KANBAN_COLUMNS.map((status) => (
-        <KanbanColumn
-          key={status}
-          status={status}
-          checks={groupedChecks[status] || []}
-          onDrop={handleDrop}
-        />
-      ))}
-    </Row>
+    <>
+      <Row gutter={16}>
+        {KANBAN_COLUMNS.map((status) => (
+          <KanbanColumn
+            key={status}
+            status={status}
+            checks={groupedChecks[status] || []}
+            onDrop={handleDrop}
+            onCardClick={handleCardClick}
+          />
+        ))}
+      </Row>
+      <RealityCheckForm
+        isOpen={isFormOpen}
+        onClose={handleCloseForm}
+        editingCheckId={editingCheckId}
+      />
+    </>
   );
 }

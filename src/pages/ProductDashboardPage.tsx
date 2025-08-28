@@ -1,10 +1,11 @@
-import { FloatButton, Layout, Segmented, Typography } from 'antd';
+import { FloatButton, Layout, Segmented } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import { ProductIdeasView } from '../components/product-ideas/ProductIdeasView';
 import { ProductIdeaForm } from '../components/product-ideas/ProductIdeaForm';
 import { ProductIdeaOverview } from '../components/product-ideas/ProductIdeaOverview';
 import { RealityChecksKanban } from '../components/reality-checks/RealityChecksKanban';
+import { RealityCheckForm } from '../components/reality-checks/RealityCheckForm';
 
 const { Header, Content } = Layout;
 
@@ -33,7 +34,32 @@ const contentStyle: React.CSSProperties = {
 const ProductDashboardPage: React.FC = () => {
   const [activeView, setActiveView] = useState<'ideas' | 'checks'>('ideas');
   const [selectedProductIdeaId, setSelectedProductIdeaId] = useState<string | null>(null);
+  
   const [isProductIdeaFormOpen, setIsProductIdeaFormOpen] = useState(false);
+  const [isRealityCheckFormOpen, setIsRealityCheckFormOpen] = useState(false);
+  const [defaultProductIdeaId, setDefaultProductIdeaId] = useState<string | undefined>(undefined);
+
+  const closeRealityCheckForm = () => {
+    setIsRealityCheckFormOpen(false);
+    setDefaultProductIdeaId(undefined);
+  };
+
+  const handleFloatButtonClick = () => {
+    if (activeView === 'ideas') {
+      if (selectedProductIdeaId) {
+        // On Product Idea Overview, open Reality Check form with default ID
+        setDefaultProductIdeaId(selectedProductIdeaId);
+        setIsRealityCheckFormOpen(true);
+      } else {
+        // On Product Ideas list, open Product Idea form
+        setIsProductIdeaFormOpen(true);
+      }
+    } else if (activeView === 'checks') {
+      // On global Reality Checks view, open Reality Check form with no default
+      setDefaultProductIdeaId(undefined);
+      setIsRealityCheckFormOpen(true);
+    }
+  };
 
   const renderContent = () => {
     if (activeView === 'ideas') {
@@ -64,7 +90,7 @@ const ProductDashboardPage: React.FC = () => {
           value={activeView}
           onChange={(value) => {
             setActiveView(value as 'ideas' | 'checks');
-            setSelectedProductIdeaId(null); // Reset selection when switching views
+            setSelectedProductIdeaId(null);
           }}
         />
       </Header>
@@ -76,11 +102,16 @@ const ProductDashboardPage: React.FC = () => {
       <FloatButton
         icon={<PlusOutlined />}
         type="primary"
-        onClick={() => setIsProductIdeaFormOpen(true)}
+        onClick={handleFloatButtonClick}
       />
       <ProductIdeaForm
         isOpen={isProductIdeaFormOpen}
         onClose={() => setIsProductIdeaFormOpen(false)}
+      />
+      <RealityCheckForm
+        isOpen={isRealityCheckFormOpen}
+        onClose={closeRealityCheckForm}
+        defaultProductIdeaId={defaultProductIdeaId}
       />
     </Layout>
   );
