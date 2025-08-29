@@ -17,8 +17,9 @@ const metricBoxStyle: React.CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'flex-start',
   padding: '16px',
+  paddingTop: '48px',
   borderLeft: '1px solid #f0f0f0',
 };
 
@@ -71,7 +72,7 @@ export function ProductIdeaOverview({ productIdeaId, onBack }: ProductIdeaOvervi
             style={{ marginRight: 16 }}
           />
           <Title
-            level={3}
+            level={4}
             style={{ margin: 0 }}
             editable={{
               onChange: (value) => {
