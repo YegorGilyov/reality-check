@@ -114,6 +114,7 @@ export function RealityCheckForm({ isOpen, onClose, editingCheckId, defaultProdu
       onCancel={onClose}
       onOk={handleSubmit}
       destroyOnClose // This is crucial to reset form state completely on close.
+      style={{ top: 50 }}
       footer={(_, { OkBtn, CancelBtn }) => (
         <>
           {isEditMode && (

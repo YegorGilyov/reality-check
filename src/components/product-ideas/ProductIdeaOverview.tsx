@@ -111,7 +111,7 @@ export function ProductIdeaOverview({ productIdeaId, onBack }: ProductIdeaOvervi
             </Col>
             <Col span={8}>
               <div style={metricBoxStyle}>
-                <Paragraph style={{ margin: 0 }}>ICE score</Paragraph>
+                <Paragraph type="secondary" style={{ margin: 0 }}>ICE score</Paragraph>
                 <Title level={2} style={{ margin: 0 }}>
                   {iceScore}
                 </Title>
@@ -119,7 +119,7 @@ export function ProductIdeaOverview({ productIdeaId, onBack }: ProductIdeaOvervi
             </Col>
             <Col span={8}>
               <div style={metricBoxStyle}>
-                <Paragraph style={{ margin: 0 }}>Reality Checks</Paragraph>
+                <Paragraph type="secondary" style={{ margin: 0 }}>Reality Checks</Paragraph>
                 <RealityChecksSummary productIdeaId={productIdea.id} />
               </div>
             </Col>
