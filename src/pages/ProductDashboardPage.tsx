@@ -29,6 +29,8 @@ const headerStyle: React.CSSProperties = {
 const contentStyle: React.CSSProperties = {
   padding: '0 48px',
   marginTop: 64,
+  backgroundColor: '#f5f5f5',
+  minHeight: 'calc(100vh - 64px)',
 };
 
 const ProductDashboardPage: React.FC = () => {
