@@ -141,7 +141,7 @@ function ScoreSlider({ label, value, onChange }: { label: string; value?: number
 
   return (
     <div>
-      <Flex justify="space-between" style={{ marginBottom: 2 }}>
+      <Flex justify="space-between" style={{ marginBottom: 0 }}>
         <Paragraph type="secondary" style={textStyle}>{label}</Paragraph>
         <Paragraph style={textStyle}>{value}</Paragraph>
       </Flex>
@@ -151,6 +151,7 @@ function ScoreSlider({ label, value, onChange }: { label: string; value?: number
         value={value}
         onChange={onChange}
         style={{ margin: 0 }}
+        trackStyle={{ backgroundColor: '#673ab7' }}
       />
     </div>
   );

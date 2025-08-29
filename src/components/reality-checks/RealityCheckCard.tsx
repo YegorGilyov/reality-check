@@ -44,9 +44,17 @@ export function RealityCheckCard({ realityCheck, onClick }: RealityCheckCardProp
         style={{ marginBottom: 12, borderTop: `3px solid ${statusColors[realityCheck.status]}` }}
         bodyStyle={{ padding: 16 }}
       >
-        <Paragraph strong>{realityCheck.hypothesis}</Paragraph>
-        {productIdea && <Text type="secondary">{productIdea.name}</Text>}
-        <div style={{ marginTop: 8 }}>
+        <Paragraph type="secondary" style={{ fontSize: 12, marginBottom: 2 }}>We believe that...</Paragraph>
+        <Paragraph style={{ marginTop: 0, marginBottom: 16 }}>{realityCheck.hypothesis}</Paragraph>
+        
+        {productIdea && (
+          <>
+            <Paragraph type="secondary" style={{ fontSize: 12, marginBottom: 2 }}>Product Idea</Paragraph>
+            <Paragraph style={{ marginTop: 0 }}>{productIdea.name}</Paragraph>
+          </>
+        )}
+        
+        <div style={{ marginTop: 16 }}>
           <Text type="secondary" style={{ fontSize: 12 }}>
             <FieldTimeOutlined style={{ marginRight: 4 }} />
             {formatDate(realityCheck.startDate)} - {formatDate(realityCheck.endDate)}

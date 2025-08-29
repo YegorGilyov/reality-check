@@ -72,7 +72,7 @@ function ScoreRow({ label, value }: { label: string; value: number }) {
 
   return (
     <div>
-      <Flex justify="space-between">
+      <Flex justify="space-between" style={{ marginBottom: -4 }}>
         <Paragraph type="secondary" style={textStyle}>{label}</Paragraph>
         <Paragraph style={textStyle}>{value}</Paragraph>
       </Flex>
@@ -81,6 +81,7 @@ function ScoreRow({ label, value }: { label: string; value: number }) {
         showInfo={false}
         strokeLinecap="round"
         size="small"
+        strokeColor="#673ab7"
         style={{ margin: 0 }}
       />
     </div>
