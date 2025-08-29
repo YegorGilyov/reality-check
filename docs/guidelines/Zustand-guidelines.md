@@ -44,9 +44,7 @@ Every entity hook will follow this implementation pattern:
     *   A **filtered and sorted array** (e.g., `blogPosts`) for rendering lists.
     *   A **filtered dictionary** (e.g., `blogPostsDict`) for convenient `O(1)` lookup within the component.
     *   All necessary **action functions** (`add`, `update`, `remove`) and **relationship operations**.
-	-   All necessary **helper functions** and **derived data objects**.
-		-   **Helper functions** are suitable for pure, stateless logic (e.g., calculators).
-		-   **Derived data objects** are memoized values that provide aggregated or summarized information from the state (e.g., an object containing status counts). They must be derived directly from the reactive state to ensure they update automatically when the underlying data changes.
+    *   All necessary **helper functions** and **derived data objects**. Helper functions are suitable for pure, stateless logic (e.g., calculators). Derived data objects are memoized values that provide aggregated or summarized information from the state (e.g., an object containing status counts). They must be derived directly from the reactive state to ensure they update automatically when the underlying data changes.
 
 ## API Design Standards
 
