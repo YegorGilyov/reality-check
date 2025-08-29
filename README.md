@@ -1,69 +1,55 @@
-# React + TypeScript + Vite
+# Reality Check: Product Idea Management
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a web application designed to help product managers and teams manage and prioritize product ideas. It provides a simple, intuitive interface for tracking ideas, evaluating them based on the ICE (Impact, Confidence, Ease) scoring model, and managing their validation through "Reality Checks."
 
-Currently, two official plugins are available:
+The application is built as a single-page application (SPA) and features a two-part dashboard for viewing product ideas and a Kanban board for tracking the status of reality checks.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+-   **Product Idea Management**: Create, edit, and delete product ideas.
+-   **ICE Scoring**: Evaluate ideas based on Impact, Confidence, and Ease. The ICE score is calculated and updated in real-time.
+-   **Prioritized List View**: Product ideas are automatically sorted by their ICE score, allowing for easy prioritization.
+-   **Reality Check Kanban**: Track the validation process of your ideas on a drag-and-drop Kanban board with four statuses: New, In Progress, Proved, and Disproved.
+-   **Detailed Idea Overview**: Drill down into a specific product idea to see its details and its associated reality checks.
+-   **Persistent State**: The application state is saved to `localStorage`, so your data persists across browser sessions.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+-   **Framework**: React
+-   **Language**: TypeScript
+-   **Build Tool**: Vite
+-   **UI Library**: Ant Design
+-   **State Management**: Zustand
+-   **Drag & Drop**: React DnD
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## Getting Started
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Prerequisites
+
+-   Node.js (v18 or later recommended)
+-   npm
+
+### Installation
+
+1.  Clone the repository:
+    ```bash
+    git clone <repository-url>
+    ```
+2.  Navigate to the project directory:
+    ```bash
+    cd reality-check
+    ```
+3.  Install the dependencies:
+    ```bash
+    npm install
+    ```
+
+### Running the Application
+
+To start the development server, run the following command:
+
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+The application will be available at `http://localhost:5173` (or the next available port).
