@@ -36,7 +36,7 @@ function CompactSlider({ value, onChange, label, number }: CompactSliderProps) {
         value={value}
         onChange={onChange}
         style={{ margin: 0 }}
-        trackStyle={{ backgroundColor: '#673ab7' }}
+        trackStyle={{ backgroundColor: '#7B61FF' }}
       />
     </div>
   );

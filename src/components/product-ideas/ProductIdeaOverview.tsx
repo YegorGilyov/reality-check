@@ -89,7 +89,6 @@ export function ProductIdeaOverview({ productIdeaId, onBack }: ProductIdeaOvervi
       <Row align="stretch" style={{ border: '1px solid #f0f0f0', borderRadius: 8, backgroundColor: '#fff' }}>
         <Col span={12} style={{ padding: '24px' }}>
           <Paragraph
-            type="secondary"
             editable={{
               onChange: (value) => {
                 setDescription(value);
@@ -151,7 +150,7 @@ function ScoreSlider({ label, value, onChange }: { label: string; value?: number
         value={value}
         onChange={onChange}
         style={{ margin: 0 }}
-        trackStyle={{ backgroundColor: '#673ab7' }}
+        trackStyle={{ backgroundColor: '#7B61FF' }}
       />
     </div>
   );

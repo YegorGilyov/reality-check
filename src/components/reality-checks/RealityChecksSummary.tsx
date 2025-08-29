@@ -9,10 +9,10 @@ interface RealityChecksSummaryProps {
 }
 
 const statusColors: Record<RealityCheckStatus, string> = {
-  New: '#d6e4ff',
-  'In Progress': '#adc6ff',
-  Proved: '#b7eb8f',
-  Disproved: '#ffccc7',
+  New: '#d9d9d9', 
+  'In Progress': '#1677ff', 
+  Proved: '#52c41a',
+  Disproved: '#ff4d4f',
 };
 
 export function RealityChecksSummary({ productIdeaId }: RealityChecksSummaryProps) {

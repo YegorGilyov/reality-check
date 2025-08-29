@@ -16,7 +16,7 @@ interface RealityCheckCardProps {
 }
 
 const statusColors: Record<RealityCheckStatus, string> = {
-  New: '#d6e4ff',
+  New: '#d9d9d9',
   'In Progress': '#adc6ff',
   Proved: '#b7eb8f',
   Disproved: '#ffccc7',
