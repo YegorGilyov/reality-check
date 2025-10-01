@@ -42,7 +42,7 @@ export function RealityCheckCard({ realityCheck, onClick }: RealityCheckCardProp
         hoverable
         onClick={onClick}
         style={{ marginBottom: 12, borderTop: `3px solid ${statusColors[realityCheck.status]}` }}
-        bodyStyle={{ padding: 16 }}
+        styles={{ body: { padding: 16 } }}
       >
         <Paragraph type="secondary" style={{ fontSize: 12, marginBottom: 2 }}>We believe that...</Paragraph>
         <Paragraph style={{ marginTop: 0, marginBottom: 16 }}>{realityCheck.hypothesis}</Paragraph>
@@ -54,12 +54,14 @@ export function RealityCheckCard({ realityCheck, onClick }: RealityCheckCardProp
           </>
         )}
         
-        <div style={{ marginTop: 16 }}>
-          <Text type="secondary" style={{ fontSize: 12 }}>
-            <FieldTimeOutlined style={{ marginRight: 4 }} />
-            {formatDate(realityCheck.startDate)} - {formatDate(realityCheck.endDate)}
-          </Text>
-        </div>
+        {realityCheck.startDate && realityCheck.endDate && (
+          <div style={{ marginTop: 16 }}>
+            <Text type="secondary" style={{ fontSize: 12 }}>
+              <FieldTimeOutlined style={{ marginRight: 4 }} />
+              {formatDate(realityCheck.startDate)} - {formatDate(realityCheck.endDate)}
+            </Text>
+          </div>
+        )}
       </Card>
     </div>
   );

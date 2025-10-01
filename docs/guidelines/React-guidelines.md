@@ -43,3 +43,31 @@
 
 ```
 
+## Framework Compatibility
+
+### Ant Design v5 with React 19+
+
+When using Ant Design v5 in a project with React 19 or newer, a patch is required to ensure compatibility, as React 19 removed some legacy APIs that `antd` relies on.
+
+**1. Install the patch package:**
+```bash
+npm install @ant-design/v5-patch-for-react-19 --save
+```
+
+**2. Apply the patch:**
+In your main entry file (e.g., `src/main.tsx`), import the patch module directly after importing the Ant Design styles. This will automatically apply the necessary patch.
+
+```tsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import 'antd/dist/reset.css';
+import '@ant-design/v5-patch-for-react-19'; // Applies the patch
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+```
+This will polyfill the missing APIs and prevent compatibility warnings and errors.

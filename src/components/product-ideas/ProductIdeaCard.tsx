@@ -29,7 +29,7 @@ export function ProductIdeaCard({ productIdea, onClick }: ProductIdeaCardProps) 
   const { name, description, impact, confidence, ease, iceScore, id } = productIdea;
 
   return (
-    <Card hoverable title={name} style={cardStyle} bodyStyle={{ padding: 0 }} onClick={onClick}>
+    <Card hoverable title={name} style={cardStyle} styles={{ body: { padding: 0 } }} onClick={onClick}>
       <Row align="stretch" style={{ minHeight: 150 }}>
         <Col span={12} style={{ padding: '24px' }}>
           <Paragraph ellipsis={{ rows: 6 }}>{description}</Paragraph>

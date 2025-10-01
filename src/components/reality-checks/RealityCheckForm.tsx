@@ -17,7 +17,7 @@ interface RealityCheckFormProps {
 
 // A dedicated interface for the form's data shape, using Dayjs for the date range
 interface RealityCheckFormValues {
-  productIdeaId: string | null;
+  productIdeaId: string;
   hypothesis: string;
   experiment: string;
   status: RealityCheckStatus;
@@ -38,35 +38,24 @@ export function RealityCheckForm({ isOpen, onClose, editingCheckId, defaultProdu
     // This effect runs when the modal opens or the check being edited changes.
     if (isOpen) {
       if (isEditMode && editingCheck) {
-        // In edit mode, we must safely convert ISO strings to Dayjs objects.
-        const startDate = dayjs(editingCheck.startDate);
-        const endDate = dayjs(editingCheck.endDate);
+        // In edit mode, safely convert ISO strings to Dayjs objects, handling nulls.
+        const startDate = editingCheck.startDate ? dayjs(editingCheck.startDate) : null;
+        const endDate = editingCheck.endDate ? dayjs(editingCheck.endDate) : null;
+        const dateRange: [Dayjs, Dayjs] | null = startDate && endDate ? [startDate, endDate] : null;
 
-        // Only set values if the dates are valid.
-        if (startDate.isValid() && endDate.isValid()) {
-          form.setFieldsValue({
-            productIdeaId: editingCheck.productIdeaId,
-            hypothesis: editingCheck.hypothesis,
-            experiment: editingCheck.experiment,
-            status: editingCheck.status,
-            dateRange: [startDate, endDate],
-          });
-        } else {
-          // If dates are invalid, log an error and don't set the date field.
-          console.error('Invalid date format encountered in stored data:', editingCheck);
-          form.setFieldsValue({
-            productIdeaId: editingCheck.productIdeaId,
-            hypothesis: editingCheck.hypothesis,
-            experiment: editingCheck.experiment,
-            status: editingCheck.status,
-          });
-        }
+        form.setFieldsValue({
+          productIdeaId: editingCheck.productIdeaId || '', // Use '' for null
+          hypothesis: editingCheck.hypothesis,
+          experiment: editingCheck.experiment,
+          status: editingCheck.status,
+          dateRange: dateRange,
+        });
       } else {
         // In create mode, reset all fields and set defaults.
         form.resetFields();
         form.setFieldsValue({
           status: 'New',
-          productIdeaId: defaultProductIdeaId || null,
+          productIdeaId: defaultProductIdeaId || '', // Use '' for null
         });
       }
     }
@@ -75,11 +64,12 @@ export function RealityCheckForm({ isOpen, onClose, editingCheckId, defaultProdu
   const handleSubmit = () => {
     form.validateFields().then((values) => {
       // Transform form values back to the entity shape for submission.
-      const { dateRange, ...rest } = values;
+      const { dateRange, productIdeaId, ...rest } = values;
       const [startDate, endDate] = dateRange;
-      
+
       const submissionData = {
         ...rest,
+        productIdeaId: productIdeaId || null, // Convert '' back to null for storage
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
       };
@@ -113,7 +103,7 @@ export function RealityCheckForm({ isOpen, onClose, editingCheckId, defaultProdu
       okText={isEditMode ? 'Update' : 'Create'}
       onCancel={onClose}
       onOk={handleSubmit}
-      destroyOnClose // This is crucial to reset form state completely on close.
+      destroyOnHidden // This is crucial to reset form state completely on close.
       style={{ top: 50 }}
       footer={(_, { OkBtn, CancelBtn }) => (
         <>
@@ -129,8 +119,8 @@ export function RealityCheckForm({ isOpen, onClose, editingCheckId, defaultProdu
     >
       <Form form={form} layout="vertical" name="reality_check_form" style={{ paddingTop: 24 }}>
         <Form.Item name="productIdeaId" label="Product Idea">
-          <Select placeholder="Not connected to any idea">
-            <Select.Option value={null}>Not connected to any idea</Select.Option>
+          <Select placeholder="Not connected to any idea" allowClear>
+            <Select.Option value="">Not connected to any idea</Select.Option>
             {productIdeas.map((idea) => (
               <Select.Option key={idea.id} value={idea.id}>
                 {idea.name}
