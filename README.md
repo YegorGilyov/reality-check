@@ -26,7 +26,7 @@ The key benefits are:
 This project was created to support a two-part article series on Intent Prototyping, which is scheduled for publication in *Smashing Magazine*.
 
 -   **Read Part 1**: [Intent Prototyping: The Allure and Danger of Pure Vibe Coding in Enterprise UX](https://yegorgilyov.name/intent-prototyping-01/)
--   **Read Part 2**: Intent Prototyping: A Practical Guide to Building with Clarity *(coming soon)*
+-   **Read Part 2**: [Intent Prototyping: A Practical Guide to Building with Clarity](https://yegorgilyov.name/intent-prototyping-02/)
 
 For more materials, updates, and discussions on the method, please visit the central hub on my personal website:
 -   **[yegorgilyov.name/intent-prototyping](https://yegorgilyov.name/intent-prototyping/)**
